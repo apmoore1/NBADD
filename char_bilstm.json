@@ -1,0 +1,63 @@
+{
+    "dataset_reader": {
+        "type": "aoc_dataset"
+    },
+    "train_data_path": "/home/andrew/Desktop/AOC/train.json",
+    "validation_data_path": "/home/andrew/Desktop/AOC/val.json",
+    "test_data_path": "/home/andrew/Desktop/AOC/test.json",
+    "evaluate_on_test": true,
+    "model": {
+        "type": "dialect_classifier",
+        "text_field_embedder": {
+          "token_characters": {
+            "type": "character_encoding",
+            "embedding":{
+                "embedding_dim": 50,
+                "trainable": true
+            },
+            "encoder": {
+                "type": "lstm",
+                "bidirectional": true,
+                "input_size": 50,
+                "hidden_size": 50,
+                "num_layers": 1,
+                "dropout": 0.5
+            },
+            "dropout": 0.5
+          }
+        },
+        "dropout": 0.5,
+        "text_encoder": {
+            "type": "lstm",
+            "bidirectional": true,
+            "input_size": 100,
+            "hidden_size": 100,
+            "num_layers": 1,
+            "dropout": 0.5
+        },
+        "classifier_feedforward": {
+          "input_dim": 200,
+          "num_layers": 1,
+          "hidden_dims": 4,
+          "activations": ["linear"],
+          "dropout": 0.5
+        }
+       },
+       "iterator": {
+        "type": "bucket",
+        "sorting_keys": [["text", "num_tokens"]],
+        "padding_noise": 0.1,
+        "batch_size": 32
+      },
+    
+      "trainer": {
+        "num_epochs": 40,
+        "cuda_device": -1,
+        "grad_clipping": 5.0,
+        "validation_metric": "-loss",
+        "optimizer": {
+          "type": "adam"
+        },
+        "patience": 5
+      }
+}

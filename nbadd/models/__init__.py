@@ -1,0 +1,1 @@
+from nbadd.models.dialect_classifier import DialectClassifier
