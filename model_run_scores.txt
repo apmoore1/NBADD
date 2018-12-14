@@ -1,0 +1,48 @@
+Word Model
+ Metrics: {
+  "training_duration": "00:18:48",
+  "training_start_epoch": 0,
+  "training_epochs": 6,
+  "epoch": 6,
+  "training_accuracy": 0.6184358568115542,
+  "training_loss": 1.0697893160042913,
+  "validation_accuracy": 0.5437792780380271,
+  "validation_loss": 1.1047552206311457,
+  "best_epoch": 2,
+  "best_validation_accuracy": 0.5725062000551115,
+  "best_validation_loss": 1.0496702179772213,
+  "test_accuracy": 0.6532791402590246
+}
+
+Char Model
+Metrics: {
+  "training_duration": "00:08:07",
+  "training_start_epoch": 0,
+  "training_epochs": 4,
+  "epoch": 4,
+  "training_accuracy": 0.6146701568276274,
+  "training_loss": 1.0754375544258288,
+  "validation_accuracy": 0.21645081289611462,
+  "validation_loss": 1.9729983454758901,
+  "best_epoch": 0,
+  "best_validation_accuracy": 0.2581289611463213,
+  "best_validation_loss": 1.5248576084947796,
+  "test_accuracy": 0.12265775695783962
+}
+
+Word Char Model
+Metrics: {
+  "training_duration": "00:21:17",
+  "training_start_epoch": 0,
+  "training_epochs": 5,
+  "epoch": 5,
+  "training_accuracy": 0.6208238616794104,
+  "training_loss": 1.0602117563371356,
+  "validation_accuracy": 0.5567993937723891,
+  "validation_loss": 1.1046908107885705,
+  "best_epoch": 1,
+  "best_validation_accuracy": 0.6094309727197575,
+  "best_validation_loss": 0.995714109965358,
+  "test_accuracy": 0.6747382198952879
+}
+
