@@ -1,2 +1,6 @@
 .vscode
 __pycache__
+train.json
+val.json
+test.json
+TwitterVectors.txt
