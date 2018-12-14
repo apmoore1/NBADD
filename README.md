@@ -32,3 +32,8 @@ These three models can be found through the three different configuration files:
 To run these models use the following command where `word_bilstm.json` represents which of the three models you want to run in this case it is the Word level Bi-directional LSTM model:
 
 `allennlp train word_bilstm.json -s /tmp/anything --include-package nbadd`
+
+## To Do
+1. Double check that when encoding the words for the Character based models that the Characters are encoded correctly and concatenated with the word vectors correctly.
+2. Add F1 Measure to the model metrics
+3. Add Attention to the models
