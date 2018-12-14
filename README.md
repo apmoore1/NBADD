@@ -33,6 +33,9 @@ To run these models use the following command where `word_bilstm.json` represent
 
 `allennlp train word_bilstm.json -s /tmp/anything --include-package nbadd`
 
+## Initial Scores
+The models have been run on a GPU machine and the scores for each of the three models can be found [here](./model_run_scores.txt).
+
 ## To Do
 1. Double check that when encoding the words for the Character based models that the Characters are encoded correctly and concatenated with the word vectors correctly.
 2. Add F1 Measure to the model metrics
