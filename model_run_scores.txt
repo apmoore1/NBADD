@@ -46,3 +46,34 @@ Metrics: {
   "test_accuracy": 0.6747382198952879
 }
 
+New Char Model
+Metrics: {
+  "training_duration": "03:57:14",
+  "training_start_epoch": 0,
+  "training_epochs": 31,
+  "epoch": 31,
+  "training_accuracy": 0.7251511826099138,
+  "training_loss": 0.8355788520168893,
+  "validation_accuracy": 0.824063670411985,
+  "validation_loss": 0.5393366620479944,
+  "best_epoch": 27,
+  "best_validation_accuracy": 0.8301498127340824,
+  "best_validation_loss": 0.5330871722387697,
+  "test_accuracy": 0.812873692077728
+}
+
+New Word Model
+Metrics: {
+  "training_duration": "00:45:10",
+  "training_start_epoch": 0,
+  "training_epochs": 10,
+  "epoch": 10,
+  "training_accuracy": 0.7601274837143057,
+  "training_loss": 0.7519902526486218,
+  "validation_accuracy": 0.8159176029962547,
+  "validation_loss": 0.5347466195771794,
+  "best_epoch": 6,
+  "best_validation_accuracy": 0.823876404494382,
+  "best_validation_loss": 0.5154703446401807,
+  "test_accuracy": 0.8193198804185351
+}

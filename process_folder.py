@@ -40,7 +40,7 @@ def folders_to_json(folder_fp: Path, json_fp: Path, verbose: bool) -> None:
             label_stats[label_text['label']] += 1
         print(label_stats)
     with json_fp.open('w', encoding='utf-8') as json_file:
-        json.dump(all_json_data, json_file)
+        json.dump(all_json_data, json_file, ensure_ascii=False)
 
 def parse_path(path_string: str) -> Path:
     path_string = Path(path_string).resolve()

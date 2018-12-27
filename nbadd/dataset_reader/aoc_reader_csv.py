@@ -1,4 +1,4 @@
-import json
+import csv
 import logging
 from pathlib import Path
 from typing import Dict, Union, List
@@ -9,12 +9,13 @@ from allennlp.data.dataset_readers.dataset_reader import DatasetReader
 from allennlp.data.tokenizers.word_splitter import JustSpacesWordSplitter
 from allennlp.data.tokenizers import Tokenizer, WordTokenizer
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
+from allennlp.common.file_utils import cached_path
 from overrides import overrides
 
 logger = logging.getLogger(__name__)
 
-@DatasetReader.register("aoc_dataset")
-class AOCDatasetReader(DatasetReader):
+@DatasetReader.register("aoc_csv_dataset")
+class AOCCSVDatasetReader(DatasetReader):
     def __init__(self, lazy: bool = False,
                  tokenizer: Tokenizer = None,
                  token_indexers: Dict[str, TokenIndexer] = None):
@@ -31,11 +32,16 @@ class AOCDatasetReader(DatasetReader):
                                {"tokens": SingleIdTokenIndexer()}
 
     def _read(self, file_path: Union[str, Path]):
-        with open(file_path, "r", encoding='utf-8') as data_file:
-            dialect_data: List[Dict[str, str]] = json.load(data_file)
+        with open(cached_path(file_path), "r", 
+                  newline='', encoding='utf-8') as csv_data_file:
+            dialect_data = csv.reader(csv_data_file)
+            # Skip the header row
+            next(dialect_data)
             for data in dialect_data:
-                text = data['text']
-                dialect = data['label']
+                text = data[2].strip()
+                if text == '':
+                    continue
+                dialect = data[1]
                 yield self.text_to_instance(text, dialect)
     
     def text_to_instance(self, text: str, dialect: str = None) -> Instance:

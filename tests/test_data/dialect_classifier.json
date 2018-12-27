@@ -7,10 +7,12 @@
     "model": {
         "type": "dialect_classifier",
         "text_field_embedder": {
-          "tokens": {
-            "type": "embedding",
-            "embedding_dim": 10,
-            "trainable": false
+          "token_embedders": {
+            "tokens": {
+              "type": "embedding",
+              "embedding_dim": 10,
+              "trainable": false
+            }
           }
         },
         "dropout": 0.5,

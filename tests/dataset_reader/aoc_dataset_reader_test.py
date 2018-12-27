@@ -11,27 +11,13 @@ class TestAOCDatasetReader(AllenNlpTestCase):
         reader = AOCDatasetReader()
         test_fp = Path(__file__, '..', '..', 'test_data', 'aoc_test_data.json')
         
-        instance1 = {"text": ["\u0627\u0644\u062f\u0641\u0627\u0639",
-                              "\u0627\u0644\u0647\u0644\u0627\u0644\u064a", 
-                              "\u064a\u0631\u062a\u0639\u0628", 
-                              "\u0639\u0646\u062f\u0645\u0627", 
-                              "\u064a\u0631\u0649"],
+        instance1 = {"text": ["الف", "مليون", "مبارك", "لفريق", "الوحدات"],
                      "label": "msa"}
-        instance2 = {"text": ["\u0648\u0645\u0646", "\u062d\u0642", 
-                              "\u0627\u0644\u0643\u0648\u064a\u062a", 
-                              "\u0627\u0644\u0644\u0649", 
-                              "\u0639\u0645\u0644\u062a\u0647"], 
+        instance2 = {"text": ["ف", "بلاش", "التعميم", "وتشويه", "صوره"], 
                      "label": "egyptian"}
-        instance3 = {"text": ["\u0627\u0631\u0627\u0645\u0643\u0648", 
-                              "\u062a\u0642\u0648\u0644", 
-                              "\u0627\u0646\u0648\u0648", "7000", 
-                              "\u0645\u0647\u0648\u0628", "6000"],
+        instance3 = {"text": ["ارامكو", "تقول", "انوو", "7000", "مهوب", "6000"],
                      "label": "gulf"}
-        instance4 = {"text": ["\u0633\u0628\u062d\u0627\u0646", 
-                              "\u0627\u0644\u0644\u0647", 
-                              "\u0645\u0627\u0641\u064a\u0647", 
-                              "\u0627\u062d\u0644\u0649", 
-                              "\u0648\u0644\u0627\u0627\u0631\u0648\u0639"], 
+        instance4 = {"text": ["اكيد", "الطفل", "ورد", "في", "قلوب"], 
                      "label": "levantine"}
         
         instances = ensure_list(reader.read(str(test_fp.resolve())))
