@@ -29,6 +29,10 @@ To run these models use the following command where `word_bilstm.json` represent
 ## Initial Scores
 The models have been run on a GPU machine and the scores for each of the three models can be found [here](./model_run_scores.txt).
 
+## [Notebooks](./notebooks)
+Here is a list of COLAB notebooks that have been created and what they show:
+1. [AOC Dataset Explore](./notebooks/AOC_Dataset.ipynb) -- This shows the distribution of the labels in the AOC dataset that has been used and how we have further processed it to remove samples that have no text.
+
 ## To Do
 1. Add F1 Measure to the model metrics
 2. Add Attention to the models
