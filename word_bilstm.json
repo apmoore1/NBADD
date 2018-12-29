@@ -15,11 +15,13 @@
     "model": {
         "type": "dialect_classifier",
         "text_field_embedder": {
-          "tokens": {
-            "type": "embedding",
-            "embedding_dim": 300,
-            "pretrained_file": "./TwitterVectors.txt",
-            "trainable": true
+          "token_embedders": {
+            "tokens": {
+              "type": "embedding",
+              "embedding_dim": 300,
+              "pretrained_file": "./TwitterVectors.txt",
+              "trainable": true
+            }
           }
         },
         "dropout": 0.5,
