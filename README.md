@@ -6,20 +6,13 @@ Requires python >= 3.6.1. Install the requirements:
 
 ## Data and Embeddings
 
-Before anything can be run the data has to be downloaded from the following [Box folder](https://lancaster.app.box.com/folder/55791268702), this can be saved anywhere on your computer. Once you have unzipped `training.zip`, `validation.zip`, and `testing.zip`, the respective folders need processing so that there is only a single file representing `training`, `validation`, and `testing`. To process each of the folders run the following:
-
-`python process_folder.py TRAINING_FOLDER_PATH ./train.json`
-
-`python process_folder.py VALIDATION_FOLDER_PATH ./val.json`
-
-`python process_folder.py TESTING_FOLDER_PATH ./test.json`
-
+The data is automatically downloaded when you run the code. The AOC data comes from the following [paper](https://aclanthology.coli.uni-saarland.de/papers/W18-3930/w18-3930) of which the data can be found [here](https://github.com/UBC-NLP/aoc_id/)
 
 The Twitter Embeddings have to be donwloaded from [here](https://drive.google.com/file/d/1hEuNHn2PA7kIf1IK0FUGUskA77YZJ3vO/view) and then processed by running the following:
 
 `python process_twitter_vectors.py LOCATION_OF_THE_DOWNLOADED_TWITTER_VECTORS --verbose`
 
-This will create a new file in the current directory called `TwitterVectors.txt` which contains a WORD and it's vector representation on each new line, like the [Glove Vectors](https://nlp.stanford.edu/projects/glove/). This is done as it fits into the AllenNLP library better, which is the main library used in this project. Once this has run you should 
+This will create a new file in the current directory called `TwitterVectors.txt` which contains a WORD and it's vector representation on each new line, like the [Glove Vectors](https://nlp.stanford.edu/projects/glove/). This is done as it fits into the AllenNLP library better, which is the main library used in this project. The Twitter embeddings come form the following [paper](https://aclanthology.coli.uni-saarland.de/papers/L18-1577/l18-1577).
 
 ## Run the code
 There is so far 3 different models:
