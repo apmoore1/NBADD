@@ -1,31 +1,62 @@
 Char Model
 Metrics: {
-  "training_duration": "03:57:14",
+  "peak_cpu_memory_MB": 3287.228,
+  "peak_gpu_0_memory_MB": 2488,
+  "training_duration": "00:35:28",
   "training_start_epoch": 0,
   "training_epochs": 31,
   "epoch": 31,
-  "training_accuracy": 0.7251511826099138,
-  "training_loss": 0.8355788520168893,
-  "validation_accuracy": 0.824063670411985,
-  "validation_loss": 0.5393366620479944,
+  "training_accuracy": 0.5261738541642346,
+  "training_loss": 0.8359709288096936,
+  "training_cpu_memory_MB": 3287.156,
+  "training_gpu_0_memory_MB": 2194,
+  "validation_accuracy": 0.8286516853932584,
+  "validation_loss": 0.5538711448807916,
   "best_epoch": 27,
-  "best_validation_accuracy": 0.8301498127340824,
-  "best_validation_loss": 0.5330871722387697,
-  "test_accuracy": 0.812873692077728
+  "best_validation_accuracy": 0.8251872659176029,
+  "best_validation_loss": 0.5418934059178758,
+  "test_accuracy": 0.8112855007473841,
+  "test_loss": 0.5543760194262461
 }
 
 Word Model
 Metrics: {
-  "training_duration": "00:45:10",
+  "peak_cpu_memory_MB": 3365.568,
+  "peak_gpu_0_memory_MB": 2318,
+  "training_duration": "00:20:52",
   "training_start_epoch": 0,
-  "training_epochs": 10,
-  "epoch": 10,
-  "training_accuracy": 0.7601274837143057,
-  "training_loss": 0.7519902526486218,
-  "validation_accuracy": 0.8159176029962547,
-  "validation_loss": 0.5347466195771794,
-  "best_epoch": 6,
-  "best_validation_accuracy": 0.823876404494382,
-  "best_validation_loss": 0.5154703446401807,
-  "test_accuracy": 0.8193198804185351
+  "training_epochs": 9,
+  "epoch": 9,
+  "training_accuracy": 0.5537136052674589,
+  "training_loss": 0.7590393924339075,
+  "training_cpu_memory_MB": 3365.568,
+  "training_gpu_0_memory_MB": 2318,
+  "validation_accuracy": 0.8142322097378277,
+  "validation_loss": 0.5334524580550765,
+  "best_epoch": 5,
+  "best_validation_accuracy": 0.8303370786516854,
+  "best_validation_loss": 0.49686060187791636,
+  "test_accuracy": 0.8230568011958147,
+  "test_loss": 0.5090703097741995
+}
+
+Word Char model
+Metrics: {
+  "peak_cpu_memory_MB": 3620.644,
+  "peak_gpu_0_memory_MB": 4111,
+  "training_duration": "00:31:19",
+  "training_start_epoch": 0,
+  "training_epochs": 11,
+  "epoch": 11,
+  "training_accuracy": 0.5578112960844288,
+  "training_loss": 0.7408271674393806,
+  "training_cpu_memory_MB": 3620.636,
+  "training_gpu_0_memory_MB": 3817,
+  "validation_accuracy": 0.8366104868913857,
+  "validation_loss": 0.49323660418569687,
+  "best_epoch": 7,
+  "best_validation_accuracy": 0.8384831460674157,
+  "best_validation_loss": 0.4761945564009829,
+  "test_accuracy": 0.828288490284006,
+  "test_loss": 0.5006318415946035
 }
