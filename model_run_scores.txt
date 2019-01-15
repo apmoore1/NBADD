@@ -60,3 +60,45 @@ Metrics: {
   "test_accuracy": 0.828288490284006,
   "test_loss": 0.5006318415946035
 }
+
+Word Attention model
+Metrics: {
+  "peak_cpu_memory_MB": 3259.992,
+  "peak_gpu_0_memory_MB": 2343,
+  "training_duration": "00:15:23",
+  "training_start_epoch": 0,
+  "training_epochs": 6,
+  "epoch": 6,
+  "training_accuracy": 0.8458054122206916,
+  "training_loss": 0.44488961967372787,
+  "training_cpu_memory_MB": 3259.94,
+  "training_gpu_0_memory_MB": 2343,
+  "validation_accuracy": 0.8341760299625468,
+  "validation_loss": 0.5081306721591307,
+  "best_epoch": 2,
+  "best_validation_accuracy": 0.8405430711610486,
+  "best_validation_loss": 0.47112042630860906,
+  "test_accuracy": 0.8341741405082213,
+  "test_loss": 0.49234127909389896
+}
+
+Word Char Attention model
+Metrics: {
+  "peak_cpu_memory_MB": 3487.528,
+  "peak_gpu_0_memory_MB": 3642,
+  "training_duration": "00:16:36",
+  "training_start_epoch": 0,
+  "training_epochs": 5,
+  "epoch": 5,
+  "training_accuracy": 0.8425716220318009,
+  "training_loss": 0.4535125746243161,
+  "training_cpu_memory_MB": 3487.528,
+  "training_gpu_0_memory_MB": 3642,
+  "validation_accuracy": 0.8397940074906367,
+  "validation_loss": 0.48537447693908287,
+  "best_epoch": 1,
+  "best_validation_accuracy": 0.8502808988764045,
+  "best_validation_loss": 0.4494520527293939,
+  "test_accuracy": 0.8403400597907325,
+  "test_loss": 0.4676147585484519
+} 
