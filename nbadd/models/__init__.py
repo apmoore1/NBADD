@@ -1,1 +1,2 @@
 from nbadd.models.dialect_classifier import DialectClassifier
+from nbadd.models.attention_dialect_classifier import AttentionDialectClassifier
