@@ -24,22 +24,14 @@
             }
           }
         },
-        "dropout": 0.5,
         "text_encoder": {
             "type": "lstm",
             "bidirectional": true,
             "input_size": 300,
             "hidden_size": 100,
-            "num_layers": 1,
-            "dropout": 0.5
+            "num_layers": 1
         },
-        "classifier_feedforward": {
-          "input_dim": 200,
-          "num_layers": 1,
-          "hidden_dims": 4,
-          "activations": ["linear"],
-          "dropout": 0.5
-        }
+        "dropout": 0.5
        },
        "iterator": {
         "type": "bucket",
@@ -50,7 +42,7 @@
     
       "trainer": {
         "num_epochs": 40,
-        "cuda_device": -1,
+        "cuda_device": 0,
         "grad_clipping": 5.0,
         "validation_metric": "-loss",
         "optimizer": {
