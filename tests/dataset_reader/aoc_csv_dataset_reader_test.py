@@ -1,14 +1,17 @@
 from pathlib import Path
 
-from allennlp.common.testing import AllenNlpTestCase
 from allennlp.common.util import ensure_list
+import pytest
 
 from nbadd.dataset_reader.aoc_reader_csv import AOCCSVDatasetReader
 
-class TestAOCCSVDatasetReader(AllenNlpTestCase):
+class TestAOCCSVDatasetReader():
+    TEST_DATA_DIR = Path(__file__, '..', '..', 'test_data')
+    LEXICON_FOLDER = Path(TEST_DATA_DIR, 'lexicons')
+
     def test_read_from_file(self):
         reader = AOCCSVDatasetReader()
-        test_fp = Path(__file__, '..', '..', 'test_data', 'aoc_test_data.csv')
+        test_fp = Path(self.TEST_DATA_DIR, 'aoc_test_data.csv')
         
         instance1 = {"text": ["بالإضافة","لقيام","معلمو","الجيزة","للذهاب"],
                      "label": "MSA"}
