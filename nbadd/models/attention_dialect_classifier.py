@@ -59,7 +59,8 @@ class AttentionDialectClassifier(Model):
 
     def forward(self,
                 text: Dict[str, torch.LongTensor],
-                label: torch.LongTensor = None) -> Dict[str, torch.Tensor]:
+                label: torch.LongTensor = None,
+                code_switching_array: torch.Tensor = None) -> Dict[str, torch.Tensor]:
         # Embed text
         embedded_text = self.text_field_embedder(text)
         embedded_text = self._variational_dropout(embedded_text)

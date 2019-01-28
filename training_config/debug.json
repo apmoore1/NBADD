@@ -1,0 +1,64 @@
+{
+    "dataset_reader": {
+        "type": "aoc_csv_dataset",
+        "token_indexers": {
+          "token_characters": {
+            "type": "characters"
+          }
+        },
+        "code_switching": true,
+        "lexicon_folder": "/home/andrew/Desktop/NBADD/tests/test_data/lexicons"
+    },
+    "train_data_path": "/home/andrew/Desktop/NBADD/tests/test_data/aoc_test_data.csv",
+    "validation_data_path": "/home/andrew/Desktop/NBADD/tests/test_data/aoc_test_data.csv",
+    "test_data_path": "/home/andrew/Desktop/NBADD/tests/test_data/aoc_test_data.csv",
+    "evaluate_on_test": true,
+    "model": {
+        "type": "attention_dialect_classifier",
+        "text_field_embedder": {
+          "token_embedders": {
+            "token_characters": {
+              "type": "character_encoding",
+              "embedding":{
+                  "embedding_dim": 50,
+                  "trainable": true
+              },
+              "encoder": {
+                  "type": "lstm",
+                  "bidirectional": true,
+                  "input_size": 50,
+                  "hidden_size": 50,
+                  "num_layers": 1,
+                  "dropout": 0.5
+              }
+            }
+          }
+        },
+        "text_encoder": {
+            "type": "lstm",
+            "bidirectional": true,
+            "input_size": 100,
+            "hidden_size": 100,
+            "num_layers": 1,
+            "dropout": 0.5
+        },
+        "dropout": 0.5
+       },
+       "iterator": {
+        "type": "bucket",
+        "sorting_keys": [["text", "num_tokens"]],
+        "padding_noise": 0.1,
+        "batch_size": 32
+      },
+    
+      "trainer": {
+        "num_epochs": 40,
+        "cuda_device": -1,
+        "grad_clipping": 5.0,
+        "validation_metric": "-loss",
+        "optimizer": {
+          "type": "adam"
+        },
+        "patience": 5
+      }
+}

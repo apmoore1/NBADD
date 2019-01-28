@@ -59,7 +59,7 @@ class AOCCSVDatasetReader(DatasetReader):
             for line in lexicon_file: 
                 word = line.strip()
                 if word:
-                    lexicon_words.add(line)
+                    lexicon_words.add(word)
         return lexicon_words
 
     def _get_code_switching_lexicon(self, dialect: str) -> Set[str]:
@@ -88,10 +88,13 @@ class AOCCSVDatasetReader(DatasetReader):
         if dialect is not None:
             fields['label'] = LabelField(dialect)
         if dialect is not None and self.code_switching:
-            code_switching_lexicon = self._get_code_switching_lexicon(dialect)
+            if dialect == 'MSA':
+                code_switching_lexicon = []
+            else:
+                code_switching_lexicon = self._get_code_switching_lexicon(dialect)
             code_switching_array = []
             for word in tokenized_text:
-                if word in code_switching_lexicon:
+                if word.text in code_switching_lexicon:
                     code_switching_array.append(1)
                 else:
                     code_switching_array.append(0)
