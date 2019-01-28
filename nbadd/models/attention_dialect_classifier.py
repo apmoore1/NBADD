@@ -26,6 +26,14 @@ class AttentionDialectClassifier(Model):
                  lexicon_regularizer: Optional[float] = 0.0,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
+        '''
+        :param lexicon_regularizer: The weight associated to the code switching 
+                                    lexicon regulisation the lower the less 
+                                    affect it has. This requires that the 
+                                    dataset reader is going to supply the code 
+                                    switching arrays for the forward function 
+                                    of this class. If set a good values is 0.05
+        '''
         super().__init__(vocab, regularizer)
         self._naive_dropout = Dropout(dropout)
         self._variational_dropout = InputVariationalDropout(dropout)

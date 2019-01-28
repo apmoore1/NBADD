@@ -27,6 +27,8 @@ class AOCCSVDatasetReader(DatasetReader):
                           is given.
         :param token_indexers: Default to just using word tokens to represent 
                                the input.
+        :param code_switching: Whether or not to produce gold attention arrays 
+                               using the code switching lexicon.
         :param lexicon_folder: Folder that contains three lexicon lists: 
                                1. MSA_DIAL_EGY.txt, 2. MSA_DIAL_GLF.txt, 
                                3. MSA_DIAL_LEV.txt. These lexicons will allow 
