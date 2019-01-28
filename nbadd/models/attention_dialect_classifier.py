@@ -23,6 +23,7 @@ class AttentionDialectClassifier(Model):
                  text_encoder: Seq2SeqEncoder,
                  classifier_feedforward: Optional[FeedForward] = None,
                  dropout: Optional[float] = 0.0,
+                 lexicon_regularizer: Optional[float] = 0.0,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         super().__init__(vocab, regularizer)
@@ -48,6 +49,7 @@ class AttentionDialectClassifier(Model):
         self.metrics = {
                 "accuracy": CategoricalAccuracy()
         }
+        self.lexicon_regularizer = lexicon_regularizer
         self.loss = torch.nn.CrossEntropyLoss()
         initializer(self)
 
@@ -94,6 +96,23 @@ class AttentionDialectClassifier(Model):
         output_dict = {"class_probabilities": class_probabilities}
 
         if label is not None:
+            if code_switching_array is not None:
+                # Mask is required to not add loss when the label is MSA
+                code_switching_mask = code_switching_array.sum(1)
+                code_switching_mask = (code_switching_mask >= 0).float()
+                # Calculating the lexicon loss
+                code_attention_weights = attention_weights.squeeze()
+                code_switching_softmax = util.masked_softmax(code_switching_array, 
+                                                             text_mask)
+                # Perform cross entropy like in the paper
+                # Need to add stuff to the code_attention_weights where it will be zero to remove nan values perhaps eplsion
+                lexicon_loss = code_switching_softmax * torch.log(code_attention_weights)
+                lexicon_loss = lexicon_loss * text_mask
+                lexicon_loss = lexicon_loss.abs()
+                lexicon_loss = lexicon_loss.sum(1)
+                lexicon_loss = lexicon_loss * code_switching_mask
+                print('done')
+
             loss = self.loss(logits, label)
             #for metrics in [self.metrics, self.f1_metrics]:
             #    for metric in metrics.values():

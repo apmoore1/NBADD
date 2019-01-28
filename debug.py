@@ -4,7 +4,7 @@ import sys
 
 from allennlp.commands import main
 
-config_file = "training_config/debug.json"
+config_file = "training_config/word_char_attention_lex_reg.json"
 
 # Use overrides to train on CPU.
 overrides = json.dumps({"trainer": {"cuda_device": -1}})
