@@ -51,7 +51,8 @@
             "hidden_size": 100,
             "num_layers": 1
         },
-        "dropout": 0.5
+        "dropout": 0.5,
+        "lexicon_regularizer": 0.05
     },
     "iterator": {
         "type": "bucket",
@@ -61,7 +62,7 @@
     },
     "trainer": {
         "num_epochs": 40,
-        "cuda_device": -1,
+        "cuda_device": 0,
         "grad_clipping": 5.0,
         "validation_metric": "-loss",
         "optimizer": {
