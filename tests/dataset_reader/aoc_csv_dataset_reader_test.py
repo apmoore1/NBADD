@@ -49,7 +49,7 @@ class TestAOCCSVDatasetReader():
         test_fp = Path(self.TEST_DATA_DIR, 'aoc_test_data.csv')
         
         instance1 = {"text": ["بالإضافة","لقيام","معلمو","الجيزة","للذهاب"],
-                     "label": "MSA", "code_switching_array": [0,0,0,0,0]}
+                     "label": "MSA", "code_switching_array": [-1,-1,-1,-1,-1]}
         instance2 = {"text": ["شهادة", "البرادعي", "يا", "سنيورة", "كانت"], 
                      "label": "DIAL_EGY", "code_switching_array": [0,1,0,0,0]}
         instance3 = {"text": ["العماله", "طلعت", "مع", "خشوم", "المواطنين", 

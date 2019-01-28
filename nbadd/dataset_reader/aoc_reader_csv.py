@@ -89,15 +89,15 @@ class AOCCSVDatasetReader(DatasetReader):
             fields['label'] = LabelField(dialect)
         if dialect is not None and self.code_switching:
             if dialect == 'MSA':
-                code_switching_lexicon = []
+                code_switching_array = [-1 for word in tokenized_text]
             else:
                 code_switching_lexicon = self._get_code_switching_lexicon(dialect)
-            code_switching_array = []
-            for word in tokenized_text:
-                if word.text in code_switching_lexicon:
-                    code_switching_array.append(1)
-                else:
-                    code_switching_array.append(0)
+                code_switching_array = []
+                for word in tokenized_text:
+                    if word.text in code_switching_lexicon:
+                        code_switching_array.append(1)
+                    else:
+                        code_switching_array.append(0)
             code_switching_array = np.array(code_switching_array)
             fields['code_switching_array'] = ArrayField(code_switching_array)
         return Instance(fields)
