@@ -102,3 +102,44 @@ Metrics: {
   "test_accuracy": 0.8403400597907325,
   "test_loss": 0.4676147585484519
 } 
+
+Word Char Attention model with code switching lexicon regularisation of 0.05
+Metrics: {
+  "peak_cpu_memory_MB": 3539.216,
+  "peak_gpu_0_memory_MB": 3758,
+  "training_duration": "00:16:55",
+  "training_start_epoch": 0,
+  "training_epochs": 5,
+  "epoch": 5,
+  "training_accuracy": 0.8464241518597212,
+  "training_loss": 2.0251926582029696,
+  "training_cpu_memory_MB": 3539.08,
+  "training_gpu_0_memory_MB": 3758,
+  "validation_accuracy": 0.8351123595505618,
+  "validation_loss": 2.044238454567458,
+  "best_epoch": 1,
+  "best_validation_accuracy": 0.8316479400749064,
+  "best_validation_loss": 2.0417743260988934,
+  "test_accuracy": 0.8210949177877429,
+  "test_loss": 2.079232650016671
+}
+Word Char Attention model with code switching lexicon regularisation of 0.01
+ Metrics: {
+  "peak_cpu_memory_MB": 3534.72,
+  "peak_gpu_0_memory_MB": 3817,
+  "training_duration": "00:16:49",
+  "training_start_epoch": 0,
+  "training_epochs": 5,
+  "epoch": 5,
+  "training_accuracy": 0.8453968105722758,
+  "training_loss": 0.7605353492295782,
+  "training_cpu_memory_MB": 3534.72,
+  "training_gpu_0_memory_MB": 3817,
+  "validation_accuracy": 0.8258426966292135,
+  "validation_loss": 0.8416300346394499,
+  "best_epoch": 1,
+  "best_validation_accuracy": 0.8372659176029963,
+  "best_validation_loss": 0.8018568815763839,
+  "test_accuracy": 0.8309977578475336,
+  "test_loss": 0.821608951198521
+}

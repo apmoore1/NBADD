@@ -52,7 +52,7 @@
             "num_layers": 1
         },
         "dropout": 0.5,
-        "lexicon_regularizer": 0.05
+        "lexicon_regularizer": 0.01
     },
     "iterator": {
         "type": "bucket",
