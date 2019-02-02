@@ -20,33 +20,34 @@ class AOCCSVDatasetReader(DatasetReader):
     def __init__(self, lazy: bool = False,
                  tokenizer: Tokenizer = None,
                  token_indexers: Dict[str, TokenIndexer] = None,
-                 code_switching: bool = False,
-                 lexicon_folder: Path = None):
+                 code_switching_lex_folder: Path = None):
         '''
         :param tokenizer: Defaults to just Whitespace if no other Tokeniser 
                           is given.
         :param token_indexers: Default to just using word tokens to represent 
                                the input.
-        :param code_switching: Whether or not to produce gold attention arrays 
-                               using the code switching lexicon.
-        :param lexicon_folder: Folder that contains three lexicon lists: 
-                               1. MSA_DIAL_EGY.txt, 2. MSA_DIAL_GLF.txt, 
-                               3. MSA_DIAL_LEV.txt. These lexicons will allow 
-                               code switching regularised attention.'''
+        :param code_switching_lex_folder: Folder that contains three lexicon 
+                                          lists of code switching words between 
+                                          different dialects and MSA: 
+                                          1. MSA_DIAL_EGY.txt, 
+                                          2. MSA_DIAL_GLF.txt, 
+                                          3. MSA_DIAL_LEV.txt. These lexicons 
+                                          will allow code switching regularised 
+                                          attention.'''
         super().__init__(lazy)
         
         self._tokenizer = tokenizer or WordTokenizer(JustSpacesWordSplitter())
         self._token_indexers = token_indexers or \
                                {"tokens": SingleIdTokenIndexer()}
 
-        self.code_switching = code_switching
-        if code_switching and lexicon_folder is None:
-            raise ValueError('Cannot perform code switching regularised '
-                             'attention without the lexicon folder.')
-        if lexicon_folder:
-            self.msa_egy = self._lexicon_set(Path(lexicon_folder, 'MSA_DIAL_EGY.txt'))
-            self.msa_glf = self._lexicon_set(Path(lexicon_folder, 'MSA_DIAL_GLF.txt'))
-            self.msa_lev = self._lexicon_set(Path(lexicon_folder, 'MSA_DIAL_LEV.txt'))
+        self.code_switching_lex_folder = code_switching_lex_folder
+        if code_switching_lex_folder is not None:
+            self.msa_egy = self._lexicon_set(Path(code_switching_lex_folder, 
+                                                  'MSA_DIAL_EGY.txt'))
+            self.msa_glf = self._lexicon_set(Path(code_switching_lex_folder, 
+                                                  'MSA_DIAL_GLF.txt'))
+            self.msa_lev = self._lexicon_set(Path(code_switching_lex_folder, 
+                                                  'MSA_DIAL_LEV.txt'))
 
     def _lexicon_set(self, lexicon_fp: Path) -> Set[str]:
         '''
@@ -61,10 +62,14 @@ class AOCCSVDatasetReader(DatasetReader):
             for line in lexicon_file: 
                 word = line.strip()
                 if word:
-                    lexicon_words.add(word)
+                    lexicon_words.add(word.lower())
         return lexicon_words
 
     def _get_code_switching_lexicon(self, dialect: str) -> Set[str]:
+        '''
+        :param dialect: The string of the dialect.
+        :returns: The code switching MSA words for the given dialect.
+        '''
         dialect_lexicon_mapper = {'DIAL_EGY': self.msa_egy, 
                                   'DIAL_GLF': self.msa_glf, 
                                   'DIAL_LEV': self.msa_lev}
@@ -89,7 +94,7 @@ class AOCCSVDatasetReader(DatasetReader):
         fields = {'text': text_field}
         if dialect is not None:
             fields['label'] = LabelField(dialect)
-        if dialect is not None and self.code_switching:
+        if dialect is not None and self.code_switching_lex_folder is not None:
             if dialect == 'MSA':
                 code_switching_array = [-1 for word in tokenized_text]
             else:

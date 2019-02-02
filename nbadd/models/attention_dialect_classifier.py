@@ -23,16 +23,25 @@ class AttentionDialectClassifier(Model):
                  text_encoder: Seq2SeqEncoder,
                  classifier_feedforward: Optional[FeedForward] = None,
                  dropout: Optional[float] = 0.0,
-                 lexicon_regularizer: Optional[float] = 0.0,
+                 code_switching_regularizer: Optional[float] = 0.0,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         '''
-        :param lexicon_regularizer: The weight associated to the code switching 
-                                    lexicon regulisation the lower the less 
-                                    affect it has. This requires that the 
-                                    dataset reader is going to supply the code 
-                                    switching arrays for the forward function 
-                                    of this class. If set a good values is 0.05
+        :param dropout: The amount of dropout to apply. Dropout is applied 
+                        after each non-linear layer and the word embeddings 
+                        lookup. Two types of dropout are applied, variational 
+                        dropout is applied if the input is to the dropout is 
+                        a sequence of vectors (each vector in the sequence 
+                        representing a word), and normal dropout if the input 
+                        is a vector.
+        :param code_switching_regularizer: The weight associated to the code 
+                                           switching lexicon regulisation the 
+                                           lower the less affect it has. This 
+                                           requires that the dataset reader is 
+                                           going to supply the code switching 
+                                           arrays for the forward function of 
+                                           this class. If set a good values is 
+                                           0.001
         '''
         super().__init__(vocab, regularizer)
         self._naive_dropout = Dropout(dropout)
@@ -57,7 +66,7 @@ class AttentionDialectClassifier(Model):
         self.metrics = {
                 "accuracy": CategoricalAccuracy()
         }
-        self.lexicon_regularizer = lexicon_regularizer
+        self.code_switching_regularizer = code_switching_regularizer
         self.loss = torch.nn.CrossEntropyLoss()
         initializer(self)
 
@@ -107,7 +116,7 @@ class AttentionDialectClassifier(Model):
 
             loss = self.loss(logits, label)
 
-            if code_switching_array is not None:
+            if code_switching_array is not None and self.training:
                 # Mask is required to not add loss when the label is MSA
                 code_switching_mask = code_switching_array.sum(1)
                 code_switching_mask = (code_switching_mask >= 0).float()
@@ -127,7 +136,7 @@ class AttentionDialectClassifier(Model):
                 # code switching mask
                 lexicon_loss = lexicon_loss * code_switching_mask
                 lexicon_loss = lexicon_loss.sum()
-                loss = loss + (self.lexicon_regularizer * lexicon_loss)
+                loss = loss + (self.code_switching_regularizer * lexicon_loss)
             #for metrics in [self.metrics, self.f1_metrics]:
             #    for metric in metrics.values():
             #        metric(logits, label)

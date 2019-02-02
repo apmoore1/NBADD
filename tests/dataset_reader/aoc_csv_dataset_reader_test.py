@@ -44,8 +44,7 @@ class TestAOCCSVDatasetReader():
         assert fields["label"].label == instance4["label"]
 
     def test_lexicon_array(self):
-        reader = AOCCSVDatasetReader(code_switching=True, 
-                                     lexicon_folder=self.LEXICON_FOLDER)
+        reader = AOCCSVDatasetReader(code_switching_lex_folder=self.LEXICON_FOLDER)
         test_fp = Path(self.TEST_DATA_DIR, 'aoc_test_data.csv')
         
         instance1 = {"text": ["بالإضافة","لقيام","معلمو","الجيزة","للذهاب"],

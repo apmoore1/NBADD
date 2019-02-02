@@ -5,9 +5,6 @@
             "tokens": {
                 "type": "single_id",
                 "lowercase_tokens": true
-            },
-            "token_characters": {
-              "type": "characters"
             }
         },
         "code_switching_lex_folder": "./lexicons"
@@ -25,33 +22,18 @@
                     "embedding_dim": 300,
                     "pretrained_file": "./TwitterVectors.txt",
                     "trainable": true
-                },
-            "token_characters": {
-                "type": "character_encoding",
-                "embedding":{
-                    "embedding_dim": 50,
-                    "trainable": true
-                },
-                "encoder": {
-                    "type": "lstm",
-                    "bidirectional": true,
-                    "input_size": 50,
-                    "hidden_size": 50,
-                    "num_layers": 1,
-                    "dropout": 0.5
-                }
                 }
             }
         },
         "text_encoder": {
             "type": "lstm",
             "bidirectional": true,
-            "input_size": 400,
+            "input_size": 300,
             "hidden_size": 100,
             "num_layers": 1
         },
-        "dropout": 0.5,
-        "code_switching_regularizer": 0.001
+        "code_switching_regularizer": 0.001,
+        "dropout": 0.5
     },
     "iterator": {
         "type": "bucket",
