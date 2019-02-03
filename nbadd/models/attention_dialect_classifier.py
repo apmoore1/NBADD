@@ -174,13 +174,10 @@ class AttentionDialectClassifier(Model):
                 bivalency_loss = self.lexicon_loss(bivalency_array, 
                                                    attention_weights, text_mask)
                 loss = loss + (self.bivalency_regularizer * bivalency_loss)
-            #for metrics in [self.metrics, self.f1_metrics]:
-            #    for metric in metrics.values():
-            #        metric(logits, label)
+            
             for metric in self.metrics.values():
                 metric(logits, label)
-            #for metric in self.f1_metrics.values():
-            #    metric(logits, label)
+            
             output_dict["loss"] = loss
 
         return output_dict
