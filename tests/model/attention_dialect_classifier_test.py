@@ -1,4 +1,5 @@
 from pathlib import Path
+import pytest
 
 from allennlp.common.testing import ModelTestCase
 from allennlp.data.iterators import DataIterator, BasicIterator
@@ -62,5 +63,8 @@ class CodeSwitchingAttentionDialectClassifierTest(ModelTestCase):
         trainer.model.training = False
         validation_loss = trainer.batch_loss(validation_batch, for_training=False).item() / 10
 
-        # Training loss should have the regularization penalty, but validation loss should not.
-        numpy.testing.assert_almost_equal(training_loss, validation_loss, decimal=0)
+        # Training loss should not equal validation loss as the training loss 
+        # should include the additional attention regulisation penalty the 
+        # the different will be arount 0.7
+        with pytest.raises(AssertionError):
+            numpy.testing.assert_almost_equal(training_loss, validation_loss, decimal=1)
