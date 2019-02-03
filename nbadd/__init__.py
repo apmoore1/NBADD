@@ -1,1 +1,1 @@
-from nbadd import dataset_reader, models
+from nbadd import dataset_reader, models, predictor

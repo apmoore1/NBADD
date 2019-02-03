@@ -1,0 +1,1 @@
+from nbadd.predictor.dialect_predictor import DialectPredictor
