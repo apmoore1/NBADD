@@ -1,17 +1,18 @@
 import csv
 import logging
 from pathlib import Path
-from typing import Dict, Union, List, Set
+from typing import Dict, Union, List, Set, Callable
 
 from allennlp.data.fields import LabelField, TextField, ArrayField
 from allennlp.data.instance import Instance
 from allennlp.data.dataset_readers.dataset_reader import DatasetReader
 from allennlp.data.tokenizers.word_splitter import JustSpacesWordSplitter
 from allennlp.data.tokenizers import Tokenizer, WordTokenizer
+from allennlp.data.tokenizers.token import Token
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
 from allennlp.common.file_utils import cached_path
 import numpy as np
-from overrides import overrides
+from overrides import overrides 
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +21,8 @@ class AOCCSVDatasetReader(DatasetReader):
     def __init__(self, lazy: bool = False,
                  tokenizer: Tokenizer = None,
                  token_indexers: Dict[str, TokenIndexer] = None,
-                 code_switching_lex_folder: Path = None):
+                 code_switching_lex_folder: Path = None,
+                 bivalency_lex_folder: Path = None):
         '''
         :param tokenizer: Defaults to just Whitespace if no other Tokeniser 
                           is given.
@@ -33,7 +35,20 @@ class AOCCSVDatasetReader(DatasetReader):
                                           2. MSA_DIAL_GLF.txt, 
                                           3. MSA_DIAL_LEV.txt. These lexicons 
                                           will allow code switching regularised 
-                                          attention.'''
+                                          attention.
+        :param bivalency_lex_folder: Folder that contains three lexicon lists 
+                                     of bivalency words between Egyptian, 
+                                     Levantine and Gulf dialects of Arabic:
+                                     1. EGY_GLF.txt, 2. EGY_LEV.txt, 
+                                     3. GLF_LEV.txt. This will allow bivalency 
+                                     regularised attention
+        
+        NOTE: That all code switching and bivalency words are lower cased and 
+        then compared to the words within the text, where when compared the 
+        words within the text are temporarly lower cased for comparison reason 
+        only. The words within the text do not remain lower cased unless you 
+        have specified this within the `token_indexers`.
+        '''
         super().__init__(lazy)
         
         self._tokenizer = tokenizer or WordTokenizer(JustSpacesWordSplitter())
@@ -48,6 +63,14 @@ class AOCCSVDatasetReader(DatasetReader):
                                                   'MSA_DIAL_GLF.txt'))
             self.msa_lev = self._lexicon_set(Path(code_switching_lex_folder, 
                                                   'MSA_DIAL_LEV.txt'))
+        self.bivalency_lex_folder = bivalency_lex_folder
+        if bivalency_lex_folder is not None:
+            egy_glf = self._lexicon_set(Path(bivalency_lex_folder, 'EGY_GLF.txt'))
+            egy_lev = self._lexicon_set(Path(bivalency_lex_folder, 'EGY_LEV.txt'))
+            glf_lev = self._lexicon_set(Path(bivalency_lex_folder, 'GLF_LEV.txt'))
+            self.bivalency_egy = egy_glf.union(egy_lev)
+            self.bivalency_lev = glf_lev.union(egy_lev)
+            self.bivalency_glf = egy_glf.union(glf_lev)
 
     def _lexicon_set(self, lexicon_fp: Path) -> Set[str]:
         '''
@@ -75,6 +98,17 @@ class AOCCSVDatasetReader(DatasetReader):
                                   'DIAL_LEV': self.msa_lev}
         return dialect_lexicon_mapper[dialect]
 
+    def _get_bivalency_lexicon(self, dialect: str) -> Set[str]:
+        '''
+        :param dialect: The string of the dialect.
+        :returns: The bivalency words between the given dialect and all other 
+                  dialects.
+        '''
+        dialect_lexicon_mapper = {'DIAL_EGY': self.bivalency_egy, 
+                                  'DIAL_GLF': self.bivalency_glf, 
+                                  'DIAL_LEV': self.bivalency_lev}
+        return dialect_lexicon_mapper[dialect]
+
     def _read(self, file_path: Union[str, Path]):
         with open(cached_path(file_path), "r", 
                   newline='', encoding='utf-8') as csv_data_file:
@@ -87,6 +121,23 @@ class AOCCSVDatasetReader(DatasetReader):
                     continue
                 dialect = data[1]
                 yield self.text_to_instance(text, dialect)
+
+    def get_lexicon_regularized_array(self, dialect: str, 
+                                      tokenized_text: List[Token],
+                                      lexicon_callable: Callable[[str], Set[str]]
+                                      ) -> ArrayField:
+        if dialect == 'MSA':
+            lexicon_regularized_array = [-1 for word in tokenized_text]
+        else:
+            lexicon = lexicon_callable(dialect)
+            lexicon_regularized_array = []
+            for word in tokenized_text:
+                if word.text.lower() in lexicon:
+                    lexicon_regularized_array.append(1)
+                else:
+                    lexicon_regularized_array.append(0)
+        lexicon_regularized_array = np.array(lexicon_regularized_array)
+        return ArrayField(lexicon_regularized_array)
     
     def text_to_instance(self, text: str, dialect: str = None) -> Instance:
         tokenized_text = self._tokenizer.tokenize(text)
@@ -95,16 +146,13 @@ class AOCCSVDatasetReader(DatasetReader):
         if dialect is not None:
             fields['label'] = LabelField(dialect)
         if dialect is not None and self.code_switching_lex_folder is not None:
-            if dialect == 'MSA':
-                code_switching_array = [-1 for word in tokenized_text]
-            else:
-                code_switching_lexicon = self._get_code_switching_lexicon(dialect)
-                code_switching_array = []
-                for word in tokenized_text:
-                    if word.text in code_switching_lexicon:
-                        code_switching_array.append(1)
-                    else:
-                        code_switching_array.append(0)
-            code_switching_array = np.array(code_switching_array)
-            fields['code_switching_array'] = ArrayField(code_switching_array)
+            code_switching_array = self.get_lexicon_regularized_array(dialect, 
+                                                                      tokenized_text, 
+                                                                      self._get_code_switching_lexicon)
+            fields['code_switching_array'] = code_switching_array
+        if dialect is not None and self.bivalency_lex_folder is not None:
+            bivalency_array = self.get_lexicon_regularized_array(dialect, 
+                                                                 tokenized_text, 
+                                                                 self._get_bivalency_lexicon)
+            fields['bivalency_array'] = bivalency_array
         return Instance(fields)
