@@ -24,6 +24,7 @@ class AttentionDialectClassifier(Model):
                  classifier_feedforward: Optional[FeedForward] = None,
                  dropout: Optional[float] = 0.0,
                  code_switching_regularizer: Optional[float] = 0.0,
+                 bivalency_regularizer: Optional[float] = 0.0,
                  initializer: InitializerApplicator = InitializerApplicator(),
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         '''
@@ -42,6 +43,12 @@ class AttentionDialectClassifier(Model):
                                            arrays for the forward function of 
                                            this class. If set a good values is 
                                            0.001
+        :param bivalency_regularizer: The weight associated to the bivalency 
+                                      regulisation the lower the less affect it 
+                                      has. This requires that the dataset 
+                                      reader is going to supply the bivalency
+                                      arrays for the forward function of this 
+                                      class.
         '''
         super().__init__(vocab, regularizer)
         self._naive_dropout = Dropout(dropout)
@@ -67,6 +74,7 @@ class AttentionDialectClassifier(Model):
                 "accuracy": CategoricalAccuracy()
         }
         self.code_switching_regularizer = code_switching_regularizer
+        self.bivalency_regularizer = bivalency_regularizer
         self.loss = torch.nn.CrossEntropyLoss()
         initializer(self)
 
@@ -76,10 +84,52 @@ class AttentionDialectClassifier(Model):
         '''
         torch.nn.init.uniform_(self.attention_vector, -0.01, 0.01)
 
+    def lexicon_loss(self, lexicon_array: torch.Tensor, 
+                     attention_weights: torch.Tensor,
+                     text_mask: torch.Tensor) -> float:
+        '''
+        :param lexicon_array: Tensor of shape [batch, sequence_length] that 
+                              contains either 0, -1, or 1 values where -1 
+                              has to be for the whole sample in the batch 
+                              which would indicate not to perform attention 
+                              regulisation else 0 and 1 indicate important words 
+                              in the sequence that should be attended to.
+        :param attention_weights: Tensor of shape [batch, sequence_length] 
+                                  that contains weights associating to 
+                                  the importance of the words in the sequence.
+        :param text_mask: Tensor of shape [batch, sequence_length]. Mask 
+                          denoting whether there is a word or not at that 
+                          position.
+        :returns: The difference between the lexicon_array denotating words 
+                  that should important to the network and those that the 
+                  network think are important via it's attention mechansim. 
+                  The difference is computed via cross entropy.
+        '''
+        # Mask is required to not add loss when the label is MSA
+        lexicon_mask = lexicon_array.sum(1)
+        lexicon_mask = (lexicon_mask >= 0).float()
+        # Calculating the lexicon loss
+        lexicon_attention_weights = attention_weights.squeeze()
+        lexicon_softmax = util.masked_softmax(lexicon_array, text_mask)
+        # This is to stop NANS from performing log on 0.
+        lexicon_attention_weights = lexicon_attention_weights + 1e-8
+        # Perform cross entropy like in the paper to get a loss function
+        # that represents disagreement between the two vectors
+        lexicon_loss = lexicon_softmax * torch.log(lexicon_attention_weights)
+        lexicon_loss = lexicon_loss * text_mask.float()
+        lexicon_loss = lexicon_loss.abs()
+        lexicon_loss = lexicon_loss.sum(1)
+
+        lexicon_loss = lexicon_loss * lexicon_mask
+        lexicon_loss = lexicon_loss.sum()
+        return lexicon_loss
+
     def forward(self,
                 text: Dict[str, torch.LongTensor],
                 label: torch.LongTensor = None,
-                code_switching_array: torch.Tensor = None) -> Dict[str, torch.Tensor]:
+                code_switching_array: torch.Tensor = None,
+                bivalency_array: torch.Tensor = None
+                ) -> Dict[str, torch.Tensor]:
         # Embed text
         embedded_text = self.text_field_embedder(text)
         embedded_text = self._variational_dropout(embedded_text)
@@ -117,26 +167,13 @@ class AttentionDialectClassifier(Model):
             loss = self.loss(logits, label)
 
             if code_switching_array is not None and self.training:
-                # Mask is required to not add loss when the label is MSA
-                code_switching_mask = code_switching_array.sum(1)
-                code_switching_mask = (code_switching_mask >= 0).float()
-                # Calculating the lexicon loss
-                code_attention_weights = attention_weights.squeeze()
-                code_switching_softmax = util.masked_softmax(code_switching_array, 
-                                                             text_mask)
-                # Perform cross entropy like in the paper to get a loss function
-                # that represents disagreement between the two vectors
-                # This is to stop NANS from performing log on 0.
-                code_attention_weights = code_attention_weights + 1e-8
-                lexicon_loss = code_switching_softmax * torch.log(code_attention_weights)
-                lexicon_loss = lexicon_loss * text_mask.float()
-                lexicon_loss = lexicon_loss.abs()
-                lexicon_loss = lexicon_loss.sum(1)
-                # do not add the MSA label data into the loss hence the 
-                # code switching mask
-                lexicon_loss = lexicon_loss * code_switching_mask
-                lexicon_loss = lexicon_loss.sum()
-                loss = loss + (self.code_switching_regularizer * lexicon_loss)
+                code_switch_loss = self.lexicon_loss(code_switching_array, 
+                                                     attention_weights, text_mask)
+                loss = loss + (self.code_switching_regularizer * code_switch_loss)
+            if bivalency_array is not None and self.training:
+                bivalency_loss = self.lexicon_loss(bivalency_array, 
+                                                   attention_weights, text_mask)
+                loss = loss + (self.bivalency_regularizer * bivalency_loss)
             #for metrics in [self.metrics, self.f1_metrics]:
             #    for metric in metrics.values():
             #        metric(logits, label)

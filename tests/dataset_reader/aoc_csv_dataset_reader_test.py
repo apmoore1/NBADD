@@ -89,13 +89,13 @@ class TestAOCCSVDatasetReader():
         instance1 = {"text": ["بالإضافة","لقيام","معلمو","الجيزة","للذهاب"],
                      "label": "MSA", "bivalency_array": [-1,-1,-1,-1,-1]}
         instance2 = {"text": ["شهادة", "البرادعي", "يا", "سنيورة", "كانت"], 
-                     "label": "DIAL_EGY", "bivalency_array": [1,0,1,0,0]}
+                     "label": "DIAL_EGY", "bivalency_array": [0,1,0,1,1]}
         instance3 = {"text": ["العماله", "طلعت", "مع", "خشوم", "المواطنين", 
                               "من"],
-                     "label": "DIAL_GLF", "bivalency_array": [0,0,0,0,0,0]}
+                     "label": "DIAL_GLF", "bivalency_array": [1,1,1,1,1,1]}
         instance4 = {"text": ["لمسه", "اليد", "مرتين", "واضحة", "جدا", 
                               "والحكم"], 
-                     "label": "DIAL_LEV", "bivalency_array": [1,0,0,0,0,1]}
+                     "label": "DIAL_LEV", "bivalency_array": [0,1,1,1,1,0]}
 
         instances = ensure_list(reader.read(str(test_fp.resolve())))
 

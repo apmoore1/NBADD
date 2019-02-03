@@ -1,0 +1,53 @@
+{
+    "dataset_reader": {
+        "type": "aoc_csv_dataset",
+        "code_switching_lex_folder": "./lexicons",
+        "bivalency_lex_folder": "./lexicons"
+    },
+    "train_data_path": "tests/test_data/aoc_test_data.csv",
+    "validation_data_path": "tests/test_data/aoc_test_data.csv",
+    "model": {
+        "type": "attention_dialect_classifier",
+        "text_field_embedder": {
+          "token_embedders": {
+            "tokens": {
+              "type": "embedding",
+              "embedding_dim": 10,
+              "trainable": false
+            }
+          }
+        },
+        "dropout": 0.5,
+        "code_switching_regularizer": 1,
+        "bivalency_regularizer": 1,
+        "text_encoder": {
+          "type": "gru",
+          "input_size": 10,
+          "hidden_size": 10,
+          "num_layers": 1
+        },
+        "classifier_feedforward": {
+          "input_dim": 10,
+          "num_layers": 2,
+          "hidden_dims": [2, 4],
+          "activations": ["sigmoid", "linear"],
+          "dropout": [0.2, 0.0]
+        }
+       },
+       "iterator": {
+        "type": "bucket",
+        "sorting_keys": [["text", "num_tokens"]],
+        "padding_noise": 0.0,
+        "batch_size": 1
+      },
+    
+      "trainer": {
+        "num_epochs": 1,
+        "cuda_device": -1,
+        "grad_clipping": 5.0,
+        "validation_metric": "+accuracy",
+        "optimizer": {
+          "type": "adagrad"
+        }
+      }
+}

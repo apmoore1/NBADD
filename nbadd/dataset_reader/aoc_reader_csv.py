@@ -124,8 +124,25 @@ class AOCCSVDatasetReader(DatasetReader):
 
     def get_lexicon_regularized_array(self, dialect: str, 
                                       tokenized_text: List[Token],
-                                      lexicon_callable: Callable[[str], Set[str]]
+                                      lexicon_callable: Callable[[str], Set[str]],
+                                      opposite: bool = False
                                       ) -> ArrayField:
+        '''
+        Given a dialect, tokenised text and a function that will create a 
+        lexicon set based on the given dialect it will return an array 
+        of 1's and 0's of the same length as the tokenised text, where 1's 
+        mark when the token in the text is within the called lexicon and 0's 
+        else where. The array will be full of -1's if the dialect is `MSA`
+
+        :param dialect: The dialect of the lexicon to call
+        :param tokenised_text: List of tokens
+        :param lexicon_callable: A function that takes the given dialect and 
+                                 creates a set of words (lexicon)
+        :param opposite: Currently will return 1's if the token is in the 
+                         lexicon, this if True will return the opposite 0's
+        :return: An array of the same length as the tokenised text of 1's 
+                 and 0's or -1's if the dialect is `MSA`.
+        '''
         if dialect == 'MSA':
             lexicon_regularized_array = [-1 for word in tokenized_text]
         else:
@@ -133,9 +150,15 @@ class AOCCSVDatasetReader(DatasetReader):
             lexicon_regularized_array = []
             for word in tokenized_text:
                 if word.text.lower() in lexicon:
-                    lexicon_regularized_array.append(1)
+                    if opposite:
+                        lexicon_regularized_array.append(0)
+                    else:
+                        lexicon_regularized_array.append(1)
                 else:
-                    lexicon_regularized_array.append(0)
+                    if opposite:
+                        lexicon_regularized_array.append(1)
+                    else:
+                        lexicon_regularized_array.append(0)
         lexicon_regularized_array = np.array(lexicon_regularized_array)
         return ArrayField(lexicon_regularized_array)
     
@@ -153,6 +176,7 @@ class AOCCSVDatasetReader(DatasetReader):
         if dialect is not None and self.bivalency_lex_folder is not None:
             bivalency_array = self.get_lexicon_regularized_array(dialect, 
                                                                  tokenized_text, 
-                                                                 self._get_bivalency_lexicon)
+                                                                 self._get_bivalency_lexicon,
+                                                                 opposite=True)
             fields['bivalency_array'] = bivalency_array
         return Instance(fields)
