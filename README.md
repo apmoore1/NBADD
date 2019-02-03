@@ -26,6 +26,20 @@ To run these models use the following command where `word_bilstm.json` represent
 
 `allennlp train word_bilstm.json -s /tmp/anything --include-package nbadd`
 
+To get the AOC data that came from the following [paper](https://aclanthology.coli.uni-saarland.de/papers/W18-3930/w18-3930) that has been cleaned so that samples that contain no text are removed run the following command. This will create the `clean_aoc_data` directory within this directory. Within the `clean_aoc_data` directory it will save the train, validation and test data at the following paths `./clean_aoc_data/train.json`, `./clean_aoc_data/val.json` and `./clean_aoc_data/test.json` respectively. These files as they contain a sample per line in json format can be used with the predictor once a model has been trained.
+
+`python get_aoc_data.py ./clean_aoc_data`
+
+The following will run each of the saved word and character attention based models accross the test data:
+1. Standard Word Character attention (Standard)
+2. Word Character with code switching regulisation (Code Switching)
+3. Word Character with bivalency regulisation (Bivalency)
+4. Word Character with code switching and bivalency regulisation (Bivalency and Code Switching)
+
+And save the results in the `confusion_matrix_results` folder under the names in the brackets. The results are saved one per line in json format where the predicted label is in the `prediction` field and the true label is in the `label` field. NOTE: To run this script it assumes you have the pre-trained models saved in the models directory within this directory.
+
+`python create_confusion_matrix_results.py`
+
 ## Initial Scores
 The models have been run on a GPU machine and the scores for each of the three models can be found [here](./model_run_scores.txt).
 
@@ -38,7 +52,3 @@ Given that we know the language ahead of time and the MSA words that occur only 
 
 ## Bivalent words
 Given that we know there is word over lap between dialects we want to assign less weight to these words in the attention mechanism. 
-
-## To Do
-1. Add F1 Measure to the model metrics
-2. Add the code switching and bivalent bias to the attention models
