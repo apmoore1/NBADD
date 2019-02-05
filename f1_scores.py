@@ -11,6 +11,7 @@ PATHS_NAMES = [('No Attention Model', Path(SAVE_DIR, 'No Attention Model.json'))
                ('Standard Model', Path(SAVE_DIR, 'Standard Model.json')),
                ('Code Switching', Path(SAVE_DIR, 'Code Switching.json')),
                ('Bivalency', Path(SAVE_DIR, 'Bivalency.json')),
+               ('Strong Bivalency', Path(SAVE_DIR, 'Strong Bivalency.json')),
                ('Bivalency and Code Switching', Path(SAVE_DIR, 'Bivalency and Code Switching.json'))]
 
 def load_scores(score_path: Path) -> Tuple[List[str], List[str]]:

@@ -103,148 +103,28 @@ Metrics: {
   "test_loss": 0.4676147585484519
 } 
 
-Word Char Attention model with code switching lexicon regularisation of 0.05
-Metrics: {
-  "peak_cpu_memory_MB": 3539.216,
-  "peak_gpu_0_memory_MB": 3758,
-  "training_duration": "00:16:55",
-  "training_start_epoch": 0,
-  "training_epochs": 5,
-  "epoch": 5,
-  "training_accuracy": 0.8464241518597212,
-  "training_loss": 2.0251926582029696,
-  "training_cpu_memory_MB": 3539.08,
-  "training_gpu_0_memory_MB": 3758,
-  "validation_accuracy": 0.8351123595505618,
-  "validation_loss": 2.044238454567458,
-  "best_epoch": 1,
-  "best_validation_accuracy": 0.8316479400749064,
-  "best_validation_loss": 2.0417743260988934,
-  "test_accuracy": 0.8210949177877429,
-  "test_loss": 2.079232650016671
-}
-Word Char Attention model with code switching lexicon regularisation of 0.01
- Metrics: {
-  "peak_cpu_memory_MB": 3534.72,
-  "peak_gpu_0_memory_MB": 3817,
-  "training_duration": "00:16:49",
-  "training_start_epoch": 0,
-  "training_epochs": 5,
-  "epoch": 5,
-  "training_accuracy": 0.8453968105722758,
-  "training_loss": 0.7605353492295782,
-  "training_cpu_memory_MB": 3534.72,
-  "training_gpu_0_memory_MB": 3817,
-  "validation_accuracy": 0.8258426966292135,
-  "validation_loss": 0.8416300346394499,
-  "best_epoch": 1,
-  "best_validation_accuracy": 0.8372659176029963,
-  "best_validation_loss": 0.8018568815763839,
-  "test_accuracy": 0.8309977578475336,
-  "test_loss": 0.821608951198521
-}
-Word Char Attention model with code switching lexicon regularisation of 0.005
-Metrics: {
-  "peak_cpu_memory_MB": 3533.984,
-  "peak_gpu_0_memory_MB": 3729,
-  "training_duration": "00:16:39",
-  "training_start_epoch": 0,
-  "training_epochs": 5,
-  "epoch": 5,
-  "training_accuracy": 0.8455835998972658,
-  "training_loss": 0.6034149149148198,
-  "training_cpu_memory_MB": 3533.984,
-  "training_gpu_0_memory_MB": 3729,
-  "validation_accuracy": 0.8289325842696629,
-  "validation_loss": 0.6847463910005049,
-  "best_epoch": 1,
-  "best_validation_accuracy": 0.8372659176029963,
-  "best_validation_loss": 0.6492661666013524,
-  "test_accuracy": 0.8288490284005979,
-  "test_loss": 0.6694889581915158
-}
+
 Word Char Attention model with code switching lexicon regularisation of 0.001
 Metrics: {
-  "peak_cpu_memory_MB": 3537.008,
-  "peak_gpu_0_memory_MB": 3754,
-  "training_duration": "00:16:40",
+  "peak_cpu_memory_MB": 3536.28,
+  "peak_gpu_0_memory_MB": 3804,
+  "training_duration": "00:16:47",
   "training_start_epoch": 0,
   "training_epochs": 5,
   "epoch": 5,
-  "training_accuracy": 0.8460855962081767,
-  "training_loss": 0.47686283798595397,
-  "training_cpu_memory_MB": 3537.008,
-  "training_gpu_0_memory_MB": 3754,
-  "validation_accuracy": 0.8364232209737827,
-  "validation_loss": 0.5291240949875223,
+  "training_accuracy": 0.8460272245441173,
+  "training_loss": 0.47636842984548916,
+  "training_cpu_memory_MB": 3536.28,
+  "training_gpu_0_memory_MB": 3804,
+  "validation_accuracy": 0.8345505617977528,
+  "validation_loss": 0.5073876928783463,
   "best_epoch": 1,
-  "best_validation_accuracy": 0.8460674157303371,
-  "best_validation_loss": 0.5013139327307661,
-  "test_accuracy": 0.8393124065769806,
-  "test_loss": 0.5209303150870906
-}
-Word Char Attention model with code switching lexicon regularisation of 0.0001
-Metrics: {
-  "peak_cpu_memory_MB": 3533.788,
-  "peak_gpu_0_memory_MB": 4055,
-  "training_duration": "00:22:07",
-  "training_start_epoch": 0,
-  "training_epochs": 7,
-  "epoch": 7,
-  "training_accuracy": 0.8541759088468094,
-  "training_loss": 0.42157505501477766,
-  "training_cpu_memory_MB": 3533.788,
-  "training_gpu_0_memory_MB": 3763,
-  "validation_accuracy": 0.8348314606741573,
-  "validation_loss": 0.5170393015988572,
-  "best_epoch": 3,
-  "best_validation_accuracy": 0.8402621722846442,
-  "best_validation_loss": 0.4789790613521002,
-  "test_accuracy": 0.8304372197309418,
-  "test_loss": 0.49989160436080465
+  "best_validation_accuracy": 0.8442883895131086,
+  "best_validation_loss": 0.4736812498844312,
+  "test_accuracy": 0.836416292974589,
+  "test_loss": 0.4952441009345339
 }
 
-Word Attention model with code switching lexicon regularisation of 0.001
-Metrics: {
-  "peak_cpu_memory_MB": 3304.864,
-  "peak_gpu_0_memory_MB": 2497,
-  "training_duration": "00:11:17",
-  "training_start_epoch": 0,
-  "training_epochs": 4,
-  "epoch": 4,
-  "training_accuracy": 0.83430619440099,
-  "training_loss": 0.5085391023731695,
-  "training_cpu_memory_MB": 3304.848,
-  "training_gpu_0_memory_MB": 2488,
-  "validation_accuracy": 0.8264044943820225,
-  "validation_loss": 0.5645391666915959,
-  "best_epoch": 0,
-  "best_validation_accuracy": 0.8382022471910112,
-  "best_validation_loss": 0.5184789649963736,
-  "test_accuracy": 0.8353886397608371,
-  "test_loss": 0.5328422677383494
-}
-
-Word Char Attention model with bivalency lexicon regularisation of 0.05:
-Metrics: {
-  "peak_cpu_memory_MB": 3535.008,
-  "peak_gpu_0_memory_MB": 3909,
-  "training_duration": "00:16:40",
-  "training_start_epoch": 0,
-  "training_epochs": 5,
-  "epoch": 5,
-  "training_accuracy": 0.8462023395362955,
-  "training_loss": 2.01285112840407,
-  "training_cpu_memory_MB": 3535.008,
-  "training_gpu_0_memory_MB": 3909,
-  "validation_accuracy": 0.8303370786516854,
-  "validation_loss": 0.531808285823393,
-  "best_epoch": 1,
-  "best_validation_accuracy": 0.8352059925093633,
-  "best_validation_loss": 0.49878052008633844,
-  "test_accuracy": 0.8247384155455905,
-  "test_loss": 0.5104362439753404
-}
 
 Word Char Attention model with bivalency lexicon regularisation of 0.01:
 Metrics: {
@@ -267,25 +147,25 @@ Metrics: {
   "test_loss": 0.49671686778762447
 }
 
-Word Char Attention model with bivalency lexicon regularisation of 0.005:
-Metrics: {
-  "peak_cpu_memory_MB": 3535.788,
-  "peak_gpu_0_memory_MB": 3989,
-  "training_duration": "00:16:42",
+Word Char Attention model with (Strong) bivalency lexicon regularisation of 0.01:
+ Metrics: {
+  "peak_cpu_memory_MB": 3534.08,
+  "peak_gpu_0_memory_MB": 4116,
+  "training_duration": "00:22:19",
   "training_start_epoch": 0,
-  "training_epochs": 5,
-  "epoch": 5,
-  "training_accuracy": 0.8478834434612061,
-  "training_loss": 0.5983103543275053,
-  "training_cpu_memory_MB": 3535.592,
-  "training_gpu_0_memory_MB": 3988,
-  "validation_accuracy": 0.8352059925093633,
-  "validation_loss": 0.5171957643936851,
-  "best_epoch": 1,
-  "best_validation_accuracy": 0.8354868913857678,
-  "best_validation_loss": 0.49247527445950906,
-  "test_accuracy": 0.8267002989536621,
-  "test_loss": 0.5143602060293084
+  "training_epochs": 7,
+  "epoch": 7,
+  "training_accuracy": 0.8573396530388289,
+  "training_loss": 0.7268094726527499,
+  "training_cpu_memory_MB": 3534.08,
+  "training_gpu_0_memory_MB": 3824,
+  "validation_accuracy": 0.8176029962546817,
+  "validation_loss": 0.5604245470847912,
+  "best_epoch": 3,
+  "best_validation_accuracy": 0.8314606741573034,
+  "best_validation_loss": 0.510465194075229,
+  "test_accuracy": 0.8189461883408071,
+  "test_loss": 0.5269110059560235
 }
 
 Word Char Attention model with bivalency lexicon regularisation of 0.001:
@@ -296,55 +176,15 @@ Word Char Attention model with bivalency lexicon regularisation of 0.001:
   "training_start_epoch": 0,
   "training_epochs": 5,
   "epoch": 5,
-  "training_accuracy": 0.8445562586098204,
-  "training_loss": 0.4791133262809863,
-  "training_cpu_memory_MB": 3538.448,
-  "training_gpu_0_memory_MB": 3989,
-  "validation_accuracy": 0.8280898876404494,
-  "validation_loss": 0.5351940628118858,
+"training_accuracy": 0.8448714655957412,
+  "training_loss": 0.477464135606809,
+  "training_cpu_memory_MB": 3537.468,
+  "training_gpu_0_memory_MB": 3834,
+  "validation_accuracy": 0.8323970037453183,
+  "validation_loss": 0.5199300236330775,
   "best_epoch": 1,
-  "best_validation_accuracy": 0.8413857677902622,
-  "best_validation_loss": 0.4798222964261463,
-  "test_accuracy": 0.8262331838565022,
-  "test_loss": 0.507497094927439
-}
-Word Char Attention model with bivalency lexicon regularisation of 0.0001
-Metrics: {
-  "peak_cpu_memory_MB": 3537.928,
-  "peak_gpu_0_memory_MB": 4583,
-  "training_duration": "00:30:31",
-  "training_start_epoch": 0,
-  "training_epochs": 10,
-  "epoch": 10,
-  "training_accuracy": 0.8693408671694413,
-  "training_loss": 0.3815700642369356,
-  "training_cpu_memory_MB": 3537.928,
-  "training_gpu_0_memory_MB": 4583,
-  "validation_accuracy": 0.8262172284644195,
-  "validation_loss": 0.5588262422891435,
-  "best_epoch": 6,
-  "best_validation_accuracy": 0.8440074906367041,
-  "best_validation_loss": 0.4763079051396804,
-  "test_accuracy": 0.8307174887892377,
-  "test_loss": 0.5049760430161633
-}
-Word Char Attention model with bivalency and code switching lexicon regularisation of 0.001
-Metrics: {
-  "peak_cpu_memory_MB": 3581.544,
-  "peak_gpu_0_memory_MB": 3704,
-  "training_duration": "00:27:54",
-  "training_start_epoch": 0,
-  "training_epochs": 9,
-  "epoch": 9,
-  "training_accuracy": 0.8648462490368676,
-  "training_loss": 0.4513321070805565,
-  "training_cpu_memory_MB": 3581.404,
-  "training_gpu_0_memory_MB": 3704,
-  "validation_accuracy": 0.8283707865168539,
-  "validation_loss": 0.5534862403473454,
-  "best_epoch": 5,
-  "best_validation_accuracy": 0.8463483146067415,
-  "best_validation_loss": 0.47183350980014144,
-  "test_accuracy": 0.8313714499252616,
-  "test_loss": 0.5014374330639839
+  "best_validation_accuracy": 0.8406367041198501,
+  "best_validation_loss": 0.48190429525639483,
+  "test_accuracy": 0.8300635276532138,
+  "test_loss": 0.5008896886635182
 }

@@ -20,6 +20,7 @@ PATHS_NAMES = [('No Attention Model', Path(MODELS_DIR, 'word_char')),
                ('Standard Model', Path(MODELS_DIR, 'word_char_attention')),
                ('Code Switching', Path(MODELS_DIR, 'word_char_attention_code_switch')),
                ('Bivalency', Path(MODELS_DIR, 'word_char_attention_bivalency')),
+               ('Strong Bivalency', Path(MODELS_DIR, 'word_char_attention_strong_bivalency')),
                ('Bivalency and Code Switching', Path(MODELS_DIR, 'word_char_attention_bivalency_code'))]
 
 
